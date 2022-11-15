@@ -6,10 +6,6 @@ pipeline {
     maven 'Maven'
   }
 
-  def env = System.getenv()
-  def username = env['USERNAME']
-  def password = env['PASSSWORD']
-
   stages {
     stage('initialize') {
       when { environment name: 'initialize', value: 'true' }
@@ -36,7 +32,7 @@ pipeline {
 
       steps {
         script {
-          sh "docker build -t ${username}/spring-test ."
+          sh "docker build -t ${USERNAME}/spring-test ."
         }
       }
     }
@@ -47,9 +43,9 @@ pipeline {
       steps {
         script {
          
-          sh "docker login -u ${username} -p ${password}"
+          sh "docker login -u ${USERNAME} -p ${PASSWORD}"
 
-          sh "docker push ${username}/spring-test:latest"
+          sh "docker push ${USERNAME}/spring-test:latest"
         }
       }
     }
