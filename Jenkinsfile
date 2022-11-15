@@ -13,7 +13,7 @@ pipeline {
 
   stages {
     stage('initialize') {
-      when { not { environment name: 'initialize', value: 'true' } }
+      when { environment name: 'initialize', value: 'true' }
 
       steps {
         sh 'mvn -v'
@@ -24,7 +24,7 @@ pipeline {
     }
 
     stage('build') {
-      when { not { environment name: 'build', value: 'true' } }
+      when { environment name: 'build', value: 'true' }
 
       steps {
         checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Kasutu/demo.git']]])
@@ -33,7 +33,7 @@ pipeline {
     }
 
     stage('build docker image') {
-      when { not { environment name: 'buildDockeImage', value: 'true' } }
+      when { environment name: 'buildDockeImage', value: 'true' }
 
       steps {
         script {
@@ -43,7 +43,7 @@ pipeline {
     }
 
     stage('deploy') {
-      when { not { environment name: 'deploy', value: 'true' } }
+      when { environment name: 'deploy', value: 'true' }
 
       steps {
         script {
@@ -51,7 +51,6 @@ pipeline {
             sh "docker login -u ${USERNAME} -p ${PASSWORD}"
           }
          
-
           sh "docker push ${USERNAME}/spring-test:latest"
         }
       }
