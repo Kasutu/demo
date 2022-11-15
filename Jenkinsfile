@@ -6,13 +6,6 @@ pipeline {
     maven 'Maven'
   }
 
-  environment {
-    initialize = true
-    build = true
-    buildDockeImage = true
-    deploy = true
-  }
-
   stages {
     stage('initialize') {
       when { environment name: 'initialize', value: true }
