@@ -13,7 +13,7 @@ pipeline {
 
   stages {
     stage('initialize') {
-      when { environment name: 'initialize', value: 'true' }
+      when { not { environment name: 'initialize', value: 'true' } }
 
       steps {
         sh 'mvn -v'
@@ -24,7 +24,7 @@ pipeline {
     }
 
     stage('build') {
-      when { environment name: 'build', value: 'true' }
+      when { not { environment name: 'build', value: 'true' } }
 
       steps {
         checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Kasutu/demo.git']]])
@@ -33,7 +33,7 @@ pipeline {
     }
 
     stage('build docker image') {
-      when { environment name: 'buildDockeImage', value: 'true' }
+      when { not { environment name: 'buildDockeImage', value: 'true' } }
 
       steps {
         script {
@@ -43,7 +43,7 @@ pipeline {
     }
 
     stage('deploy') {
-      when { environment name: 'deploy', value: 'true' }
+      when { not { environment name: 'deploy', value: 'true' } }
 
       steps {
         script {
