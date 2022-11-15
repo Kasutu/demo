@@ -6,6 +6,8 @@ pipeline {
     maven 'Maven'
   }
 
+  def USERNAME = 'kasutu'
+
   stages {
     stage('initialize') {
       when { environment name: 'initialize', value: 'true' }
