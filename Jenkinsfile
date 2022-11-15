@@ -18,7 +18,7 @@ pipeline {
 
     stage('build') {
       steps {
-        checkout([$class: 'GitSCM', branches: [[name: '*/dev']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Kasutu/demo.git']]])
+        checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Kasutu/demo.git']]])
         sh 'mvn clean install'
       }
     }
