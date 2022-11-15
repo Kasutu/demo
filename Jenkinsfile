@@ -6,7 +6,10 @@ pipeline {
     maven 'Maven'
   }
 
-  def USERNAME = 'kasutu'
+  environment {
+    USERNAME = 'kasutu'
+  }
+
 
   stages {
     stage('initialize') {
