@@ -42,7 +42,7 @@ pipeline {
 
       steps {
         script {
-          def pwd = [PASSWORD]
+          def pwd = ["PASSWORD"]
          
           sh "docker login -u ${USERNAME} -p ${pwd}"
 
