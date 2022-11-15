@@ -6,6 +6,10 @@ pipeline {
     maven 'Maven'
   }
 
+  def env = System.getenv()
+  def username = env['USERNAME']
+  def password = env['PASSSWORD']
+
   stages {
     stage('initialize') {
       when { environment name: 'initialize', value: 'true' }
@@ -32,7 +36,7 @@ pipeline {
 
       steps {
         script {
-          sh 'docker build -t kasutu/spring-test .'
+          sh "docker build -t ${username}/spring-test ."
         }
       }
     }
@@ -42,11 +46,10 @@ pipeline {
 
       steps {
         script {
-          withCredentials([string(credentialsId: 'docker-credentials-kasutu', variable: 'docker-credentials')]) {
-            sh "docker login -u kasutu -p ${docker-credentials}"
-          }
+         
+          sh "docker login -u ${username} -p ${password}"
 
-          sh 'docker push kasutu/spring-test:latest'
+          sh "docker push ${username}/spring-test:latest"
         }
       }
     }
