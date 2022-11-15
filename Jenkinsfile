@@ -7,15 +7,15 @@ pipeline {
   }
 
   environment {
-   initialize = true
-   build = true
-   buildDockeImage = true
-   deploy = true
+    initialize = true
+    build = true
+    buildDockeImage = true
+    deploy = true
   }
 
   stages {
     stage('initialize') {
-      when {expression {"${initialize}" == 'true'}}
+      when { environment name: 'initialize', value: true }
 
       steps {
         sh 'mvn -v'
@@ -26,7 +26,7 @@ pipeline {
     }
 
     stage('build') {
-      when {expression {"${build}" == 'true'}}
+      when { environment name: 'build', value: true }
 
       steps {
         checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Kasutu/demo.git']]])
@@ -35,21 +35,21 @@ pipeline {
     }
 
     stage('build docker image') {
-      when {expression {"${buildDockeImage}" == 'true'}}
+      when { environment name: 'buildDockeImage', value: true }
 
       steps {
-        script{
+        script {
           sh 'docker build -t kasutu/spring-test .'
         }
       }
     }
 
     stage('deploy') {
-      when {expression {"${deploy}" == 'true'}}
-      
+      when { environment name: 'deploy', value: true }
+
       steps {
         script {
-          sh "docker push kasutu/spring-test:latest"
+          sh 'docker push kasutu/spring-test:latest'
         }
       }
     }
