@@ -34,10 +34,6 @@ pipeline {
     stage('deploy') {
       steps {
         script {
-          withCredentials([string(credentialsId: 'docker-credentials-kasutu', variable: 'docker-credentials')]) {
-            sh "docker login -u kasutu -p ${docker-credentials}"
-          }
-
           sh "docker push kasutu/spring-test:latest"
         }
       }
