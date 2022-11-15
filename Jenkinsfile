@@ -42,8 +42,9 @@ pipeline {
 
       steps {
         script {
+          def pwd = [PASSWORD]
          
-          sh "docker login -u ${USERNAME} -p ${PASSWORD}"
+          sh "docker login -u ${USERNAME} -p ${pwd}"
 
           sh "docker push ${USERNAME}/spring-test:latest"
         }
